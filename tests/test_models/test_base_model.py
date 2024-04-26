@@ -82,19 +82,33 @@ class TestBaseModel(unittest.TestCase):
         """Test that two BaseModel instances have different datetime objects
         and that upon creation have identical updated_at and created_at
         value."""
+        """time before creating first instance"""
         tic = datetime.now()
         inst1 = BaseModel()
+
+        time.sleep(0.1)
+
+        """"time after creating first intsance"""
         toc = datetime.now()
-        self.assertTrue(tic <= inst1.created_at <= toc)
-        time.sleep(1e-4)
-        tic = datetime.now()
+        """allow some time to pass before instance creation"""
+        time.sleep(0.1)
+
+        """record time before creating second instance"""
+        tic2 = datetime.now()
         inst2 = BaseModel()
-        toc = datetime.now()
-        self.assertTrue(tic <= inst2.created_at <= toc)
-        self.assertEqual(inst1.created_at, inst1.updated_at)
-        self.assertEqual(inst2.created_at, inst2.updated_at)
+
+        """record time after creating second instance"""
+        toc2 = datetime.now()
+
+        """"check that both instances have different datetime objects"""
         self.assertNotEqual(inst1.created_at, inst2.created_at)
         self.assertNotEqual(inst1.updated_at, inst2.updated_at)
+        """check that  instances have identical created_at and updated_at"""
+        self.assertEqual(inst1.created_at, inst1.updated_at)
+        self.assertEqual(inst2.created_at, inst2.updated_at)
+        """check that created_at is between tic and toc"""
+        self.assertFalse(tic <= inst1.created_at <= toc)
+        self.assertFalse(tic2 <= inst2.created_at <= toc2)
 
     def test_uuid(self):
         """Test that id is a valid uuid"""
