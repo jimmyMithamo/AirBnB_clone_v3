@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -12,6 +12,12 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 def close_storage(exception):
     """call storage.close()"""
     storage.close()
+
+
+@app.errorhandler(404)
+def error_handler(error):
+    """return a JSON-formatted 404 status code response"""
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
