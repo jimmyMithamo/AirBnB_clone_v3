@@ -1,36 +1,16 @@
 #!/usr/bin/python3
 """
-index
+index.py
 """
 
 from flask import jsonify
-from api.v1.views import app_views
-
 from models import storage
 
 
-@app_views.route("/status", methods=['GET'], strict_slashes=False)
-def status():
-    """
-    status route
-    :return: response with json
-    """
-    data = {
-        "status": "OK"
-    }
-
-    resp = jsonify(data)
-    resp.status_code = 200
-
-    return resp
-
-@app_views.route("/stats", methods=['GET'], strict_slashes=False)
-def stats():
-    """
-    stats of all objs route
-    :return: json of all objs
-    """
-    data = {
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+def get_stats():
+    """retrieves statistics about the objects"""
+    stats = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
         "places": storage.count("Place"),
@@ -38,8 +18,4 @@ def stats():
         "states": storage.count("State"),
         "users": storage.count("User"),
     }
-
-    resp = jsonify(data)
-    resp.status_code = 200
-
-    return resp
+    return jsonify(stats)
