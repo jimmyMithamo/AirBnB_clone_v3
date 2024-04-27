@@ -1,7 +1,12 @@
-from flask import jsonify, abort, request
+#!/usr/bin/python3
+"""
+cities.py
+"""
+
 from api.v1.views import app_views
 from models import storage
 from models.city import City
+
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
 def get_cities(state_id):
