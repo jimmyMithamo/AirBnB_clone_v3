@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
 """
 index.py
 """
@@ -15,6 +16,14 @@ def get_status():
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
+=======
+from api.v1.views import app_views
+from flask import jsonify
+from models import storage
+
+
+@app_views.route('/stats', methods=['GET'])
+>>>>>>> 7e28e44 (changes)
 def get_stats():
     """retrieves statistics about the objects"""
     stats = {
@@ -22,7 +31,10 @@ def get_stats():
         "cities": storage.count("City"),
         "places": storage.count("Place"),
         "reviews": storage.count("Review"),
-        "states": storage.count("State"),
-        "users": storage.count("User"),
+        "users": storage.count("User")
     }
     return jsonify(stats)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7e28e44 (changes)

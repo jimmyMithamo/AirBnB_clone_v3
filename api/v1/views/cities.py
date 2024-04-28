@@ -1,8 +1,12 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
 """
 cities.py
 """
 
+=======
+from flask import jsonify, abort, request
+>>>>>>> 7e28e44 (changes)
 from api.v1.views import app_views
 from models import storage
 from models.city import City
