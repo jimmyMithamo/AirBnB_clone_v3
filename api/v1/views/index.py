@@ -3,6 +3,14 @@ from api.v1.views import app_views
 from flask import jsonify
 from models import storage
 
+@app_views.route('/status')
+def status():
+    """returns json 'status:ok'"""
+    json = {
+        "status": "OK"
+    }
+    return jsonify(json)
+
 
 @app_views.route('/stats', methods=['GET'])
 def get_stats():
