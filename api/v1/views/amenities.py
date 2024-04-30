@@ -8,33 +8,34 @@ from flask import jsonify, abort, request
 from api.v1.views import app_views
 
 
-@app_views.route("/amenities/", methods=["GET"])
+@app_views.route('/amenities', methods=["GET"], strict_slashes=False)
 def get_amenities():
     """Obtaining all the Amenities"""
-    amens = [amenity.to_dict() for amenity in storage.all(Amenity).values()]
-    return (jsonify(amens)), 200
+    amenities = storage.all(Amenity).items()
+    for key, value in amenities:
+        value = value.to_dict()
+        amenities.append(value)
+    return jsonify(amenities), 200
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["GET"])
 def get_amenity(amenity_id):
     """Obtaining a specific Amenity"""
-    if storage.get(Amenity, amenity_id) is not None:
-        amenity = storage.get(Amenity, amenity_id)
-        return jsonify(amenity.to_dict()), 200
-    else:
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
         abort(404)
-
+    return jsonify(amenity.to_dict()), 200
+    
 
 @app_views.route("/amenities/<amenity_id>", methods=["DELETE"])
 def delete_amenity(amenity_id):
     """Deleting an Amenity"""
-    if storage.get(Amenity, amenity_id) is not None:
-        amenity = storage.get(Amenity, amenity_id)
-        storage.delete(amenity)
-        storage.save()
-        return jsonify({}), 200
-    else:
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
         abort(404)
+    storage.delete(amenity)
+    storage.save()
+    return jsonify({}), 200
 
 
 @app_views.route("/amenities/", methods=["POST"])
