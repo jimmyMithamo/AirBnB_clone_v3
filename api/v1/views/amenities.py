@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """amenities api"""
 from models.amenity import Amenity
 
