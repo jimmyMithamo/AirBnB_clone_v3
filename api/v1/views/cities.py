@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """cities api"""
 from models.city import City
 from models.state import State
