@@ -1,26 +1,24 @@
 #!/usr/bin/python3
-from api.v1.views import app_views
-from flask import jsonify
+"""file"""
 from models import storage
+from flask import jsonify
+from api.v1.views import app_views
 
-
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes = False)
 def status():
-    """returns  'status:ok'"""
-    json = {
-        "status": "OK"
-    }
-    return jsonify(json)
+    """returns status of our api"""
+    return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats', methods=['GET'])
-def get_stats():
-    """retrieves statistics about the objects"""
-    stats = {
+@app_views.route('/stats', strict_slashes = False)
+def get_stat():
+    """gets the number of class objects"""
+    new_dict = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
         "places": storage.count("Place"),
         "reviews": storage.count("Review"),
+        "states": storage.count("State"),
         "users": storage.count("User")
     }
-    return jsonify(stats)
+    return jsonify(new_dict)
