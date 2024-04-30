@@ -33,7 +33,7 @@ def state_get(state_id):
 def state_delete(state_id):
     """ handles DELETE method """
     empty_dict = {}
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     storage.delete(state)
